@@ -133,3 +133,24 @@ func (n *PoseNet) Stop() {
 		n.video = js.Null()
 	}
 }
+
+// GetAdjacentKeyPoints ...
+func GetAdjacentKeyPoints(keypoints js.Value, minConfidence float64) js.Value {
+	return posenet.Call("getAdjacentKeyPoints", keypoints, minConfidence)
+}
+
+// EstimateSinglePose ...
+func (n *PoseNet) EstimateSinglePose(video js.Value, option map[string]interface{}) js.Value {
+	if option == nil {
+		return n.net.Call("estimateSinglePose", video)
+	}
+	return n.net.Call("estimateSinglePose", video, option)
+}
+
+// EstimateMultiplePoses ...
+func (n *PoseNet) EstimateMultiplePoses(video js.Value, option map[string]interface{}) js.Value {
+	if option == nil {
+		return n.net.Call("estimateMultiplePoses", video)
+	}
+	return n.net.Call("estimateMultiplePoses", video, option)
+}
