@@ -74,8 +74,6 @@ func (n *PoseNet) Start(videoID string) error {
 		"audio": false,
 		"video": map[string]interface{}{
 			"facingMode": "true",
-			"width":      n.Config.InputResolution,
-			"height":     n.Config.InputResolution,
 		},
 	}
 	stream, err := jsutil.Await(navigator.Get("mediaDevices").Call("getUserMedia", config))
