@@ -142,16 +142,18 @@ func GetAdjacentKeyPoints(keypoints js.Value, minConfidence float64) js.Value {
 
 // EstimateSinglePose ...
 func (n *PoseNet) EstimateSinglePose(option map[string]interface{}) (js.Value, error) {
-	if option == nil {
-		return n.net.Call("estimateSinglePose", n.video)
+	args := []interface{}{n.video}
+	if option != nil {
+		args = append(args, option)
 	}
-	return jsutil.Await(n.net.Call("estimateSinglePose", n.video, option))
+	return jsutil.Await(n.net.Call("estimateSinglePose", args...))
 }
 
 // EstimateMultiplePoses ...
 func (n *PoseNet) EstimateMultiplePoses(option map[string]interface{}) (js.Value, error) {
-	if option == nil {
-		return n.net.Call("estimateMultiplePoses", n.video)
+	args := []interface{}{n.video}
+	if option != nil {
+		args = append(args, option)
 	}
-	return jsutil.Await(n.net.Call("estimateMultiplePoses", n.video, option))
+	return jsutil.Await(n.net.Call("estimateMultiplePoses", args...))
 }
