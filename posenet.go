@@ -137,7 +137,7 @@ func (n *PoseNet) Stop() {
 
 // GetAdjacentKeyPoints ...
 func GetAdjacentKeyPoints(keypoints js.Value, minConfidence float64) js.Value {
-	return posenet.Call("getAdjacentKeyPoints", keypoints, minConfidence)
+	return poseNet.Call("getAdjacentKeyPoints", keypoints, minConfidence)
 }
 
 // EstimateSinglePose ...
