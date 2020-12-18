@@ -13,7 +13,7 @@ import (
 var (
 	document  = js.Global().Get("document")
 	navigator = js.Global().Get("navigator")
-	posenet   = spago.LoadModuleAs("posenet", "https://nobonobo.github.io/posenet/dist/posenet.js")
+	poseNet   = js.Null()
 )
 
 // PoseNet ...
@@ -64,8 +64,11 @@ func New(config Config) *PoseNet {
 
 // Start ...
 func (n *PoseNet) Start(videoID string) error {
+	if poseNet.IsNull() {
+		poseNet = spago.LoadModuleAs("posenet", "https://nobonobo.github.io/posenet/dist/posenet.js")
+	}
 	n.Stop()
-	net, err := jsutil.Await(posenet.Call("load"))
+	net, err := jsutil.Await(poseNet.Call("load"))
 	if err != nil {
 		return err
 	}
