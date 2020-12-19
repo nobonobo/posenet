@@ -31,6 +31,7 @@ type Config struct {
 	InputResolution int     `js:"inputResolution"`
 	Multiplier      float64 `js:"multiplier"`
 	QuantBytes      int     `js:"quantBytes"`
+	FlipHorizontal  bool    `js:"flipHorizontal"`
 }
 
 // DefaultSingleConfig ...
@@ -145,6 +146,11 @@ func (n *PoseNet) EstimateSinglePose(option map[string]interface{}) (js.Value, e
 	args := []interface{}{n.video}
 	if option != nil {
 		args = append(args, option)
+	} else {
+		args = append(args, map[string]interface{}{
+			"flipHorizontal": n.Config.FlipHorizontal,
+			"decodingMethod": "single-person",
+		})
 	}
 	return jsutil.Await(n.net.Call("estimateSinglePose", args...))
 }
@@ -154,6 +160,11 @@ func (n *PoseNet) EstimateMultiplePoses(option map[string]interface{}) (js.Value
 	args := []interface{}{n.video}
 	if option != nil {
 		args = append(args, option)
+	} else {
+		args = append(args, map[string]interface{}{
+			"flipHorizontal": n.Config.FlipHorizontal,
+			"decodingMethod": "multi-person",
+		})
 	}
 	return jsutil.Await(n.net.Call("estimateMultiplePoses", args...))
 }
