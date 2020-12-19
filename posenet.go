@@ -34,6 +34,18 @@ type Config struct {
 	FlipHorizontal  bool    `js:"flipHorizontal"`
 }
 
+// JSValue ...
+func (c Config) JSValue() js.Value {
+	return js.ValueOf(map[string]interface{}{
+		"algorithm":       c.Algorithm,
+		"architecture":    c.Architecture,
+		"outputStride":    c.OutputStride,
+		"inputResolution": c.InputResolution,
+		"multiplier":      c.Multiplier,
+		"quantBytes":      c.QuantBytes,
+	})
+}
+
 // DefaultSingleConfig ...
 var DefaultSingleConfig = Config{
 	Algorithm:       "single-pose",
@@ -69,7 +81,7 @@ func (n *PoseNet) Start(videoID string) error {
 		poseNet = spago.LoadModuleAs("posenet", "https://nobonobo.github.io/posenet/dist/posenet.js")
 	}
 	n.Stop()
-	net, err := jsutil.Await(poseNet.Call("load"))
+	net, err := jsutil.Await(poseNet.Call("load", n.Config.JSValue()))
 	if err != nil {
 		return err
 	}
