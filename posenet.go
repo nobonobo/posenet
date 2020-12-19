@@ -96,10 +96,10 @@ func (n *PoseNet) Start(videoID string) error {
 	if err != nil {
 		return err
 	}
-	video := document.Call("getElementById", videoID)
-	if video.IsUndefined() {
-		return fmt.Errorf("not found video id=%q", videoID)
-	}
+	video := document.Call("createElement", "video")
+	video.Set("id", videoID)
+	video.Set("width", n.Config.InputResolution)
+	video.Set("height", n.Config.InputResolution)
 	video.Set("srcObject", stream)
 	success, err := jsutil.Await(
 		js.Global().Get("Promise").New(jsutil.Callback1(func(resolve js.Value) interface{} {
