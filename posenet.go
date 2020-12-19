@@ -104,6 +104,7 @@ func (n *PoseNet) Start(videoID string) error {
 	video.Set("muted", true)
 	video.Set("playsinline", true)
 	video.Set("srcObject", stream)
+	video.Get("style").Set("display", "none")
 	document.Get("body").Call("appendChild", video)
 	success, err := jsutil.Await(
 		js.Global().Get("Promise").New(jsutil.Callback1(func(resolve js.Value) interface{} {
