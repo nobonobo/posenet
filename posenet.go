@@ -89,7 +89,7 @@ func (n *PoseNet) Start(videoID string) error {
 	config := map[string]interface{}{
 		"audio": false,
 		"video": map[string]interface{}{
-			"facingMode": "true",
+			"facingMode": "user",
 		},
 	}
 	stream, err := jsutil.Await(navigator.Get("mediaDevices").Call("getUserMedia", config))
